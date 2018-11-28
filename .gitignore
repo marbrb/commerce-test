@@ -1,0 +1,6 @@
+*.pyc
+local_settings.py
+__pycache__
+node_modules
+
+app/__pycache__/settings.cpython-37.pyc

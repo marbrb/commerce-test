@@ -29,15 +29,18 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+PROJECT_APPS = (
+    'orders',
+)
 
-INSTALLED_APPS = [
+INSTALLED_APPS = PROJECT_APPS + (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -100,12 +103,19 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# Login conf
+
+LOGIN_URL = 'orders:login'
+LOGIN_REDIRECT_URL = 'orders:new_order'
+LOGOUT_REDIRECT_URL = 'orders:login'
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-co'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 
@@ -114,7 +124,30 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Tpaga conf
+
+TPAGA_BASE_URL = ''
+TPAGA_CREATE_PAYMENT_URL = ''
+TPAGA_PAYMENT_STATUS_URL = ''
+TPAGA_CONFIRM_DELIVERY_URL = ''
+TPAGA_REFUND_URL = ''
+TPAGA_USERNAME = ''
+TPAGA_PASSWORD = ''
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "app/static"),
+]
+
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, '/static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+MEDIA_URL = '/uploads/'
+
+
+try:
+    from .local_settings import *
+except Exception as e:
+    pass

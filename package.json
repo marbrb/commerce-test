@@ -1,0 +1,11 @@
+{
+  "name": "commerce-test",
+  "author": "Miguel Rodriguez <marbrb1@gmail.com>",
+  "private": false,
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "jquery-confirm": "^3.3.2"
+  },
+  "version": "1.0.0",
+  "license": "MIT"
+}
