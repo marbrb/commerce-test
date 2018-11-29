@@ -123,10 +123,9 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Tpaga conf
 
-TPAGA_BASE_URL = ''
+TPAGA_API_URL = ''
 TPAGA_CREATE_PAYMENT_URL = ''
 TPAGA_PAYMENT_STATUS_URL = ''
 TPAGA_CONFIRM_DELIVERY_URL = ''
@@ -146,6 +145,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, '/static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/uploads/'
 
+BASE_URL = ''
 
 try:
     from .local_settings import *
