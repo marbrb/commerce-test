@@ -52,11 +52,12 @@ class Payment(models.Model):
         choices=data.PAYMENT_STATUS_CHOICES,
         default=data.CREATED_CHOICE,
         verbose_name='estado',
+        null=True,
     )
 
     status_updated_at = models.DateTimeField(
-        auto_now_add=True,
         verbose_name='fecha de actualización del estado',
+        null=True,
     )
 
     create_response = JSONField(
@@ -78,6 +79,7 @@ class Payment(models.Model):
     request_token = models.CharField(
         max_length=128,
         verbose_name='token de solicitud de pago',
+        null=True,
     )
 
     @property
