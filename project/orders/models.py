@@ -33,7 +33,7 @@ class Order(models.Model):
         verbose_name='fecha de creación',
     )
 
-    def _str_(self):
+    def __str__(self):
         return 'Orden número {}'.format(self.id)
 
     class Meta:
@@ -96,10 +96,39 @@ class Payment(models.Model):
     def is_reversed(self):
         return self.status == data.REVERSED_CHOICE
 
-    def _str_(self):
+    def __str__(self):
         return 'Solicitud de pago número {}'.format(self.id)
 
     class Meta:
         ordering = ['created_at']
         verbose_name = 'Solicitud de pago'
         verbose_name_plural = 'Solicitudes de pago'
+
+
+class Product(models.Model):
+    name = models.CharField(
+        max_length=255,
+        verbose_name='nombre',
+    )
+
+    description = models.CharField(
+        max_length=512,
+        verbose_name='descripción',
+    )
+
+    image = models.ImageField(
+        verbose_name='imagen',
+        upload_to='products/images/',
+    )
+
+    price = models.PositiveIntegerField(
+        verbose_name='precio'
+    )
+
+    def __str__(self):
+        return '{}'.format(self.name)
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Producto'
+        verbose_name_plural = 'Productos'
