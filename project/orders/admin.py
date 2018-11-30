@@ -74,7 +74,7 @@ class PaymentAdmin(admin.ModelAdmin):
 
         return '-'
 
-    _order.short_description = 'Datos del pago'
+    _order.short_description = 'Datos de la orden'
     _order.allow_tags = True
 
     def create_response_json(self, obj):
