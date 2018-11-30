@@ -167,6 +167,7 @@ def reverse_payment(payment):
             if response.ok and response_data.get('status') == 'reverted':
                 payment.status = data.REVERSED_CHOICE
                 payment.status_updated_at = timezone.now()
+                payment.canceled_at = timezone.now()
                 payment.save()
 
             else:
