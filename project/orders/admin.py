@@ -85,6 +85,14 @@ class PaymentAdmin(admin.ModelAdmin):
             pk=object_id,
         )
 
+
+        if not (payment.is_paid or payment.is_delivered):
+            messages.error(request, msg)
+
+            return redirect(
+                'admin:orders_payment_change', object_id
+            )
+
         reverse_payment(payment=payment)
 
         if payment.is_reversed:
@@ -98,12 +106,20 @@ class PaymentAdmin(admin.ModelAdmin):
         )
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
-        extra_context = extra_context or {}
-        extra_context['buttons'] = [{
-            'url': 'reembolso',
-            'textname': 'Revertir pago',
-            'confirm': '¿Confirma que desea revertir el pago?',
-        }]
+        extra_context = extra_context or {'buttons': []}
+
+        payment = get_object_or_404(
+            Payment,
+            pk=object_id,
+        )
+
+        if payment.is_paid or payment.is_delivered:
+            extra_context['buttons'] = [{
+                'url': 'reembolso',
+                'textname': 'Revertir pago',
+                'confirm': '¿Confirma que desea revertir el pago?',
+            }]
+
 
         return super().change_view(
             request,
