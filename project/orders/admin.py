@@ -76,6 +76,9 @@ class PaymentAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request, obj=None):
+        return not Product.objects.exists()
+
     list_display = (
         'id',
         'name',

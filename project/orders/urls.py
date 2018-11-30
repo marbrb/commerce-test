@@ -1,18 +1,27 @@
 from django.urls import path
 
-# from .views import OrderFormView
+from .views import CompleteOrderTemplateView
 from .views import CustomLoginView
+from .views import NewOrderFormView
 
 urlpatterns = [
-    # url(
-    #     r'^$',
-    #     NewOrderFormView.as_view(),
-    #     name='new_order',
-    # ),
+    path(
+        r'',
+        NewOrderFormView.as_view(),
+        name='new_order',
+    ),
 
     path(
-        r'ingresar/',
+        'orden/<int:pk>/hecho/',
+        CompleteOrderTemplateView.as_view(),
+        name='complete_order',
+    ),
+
+    path(
+        'ingresar/',
         CustomLoginView.as_view(),
         name='login',
     ),
+
+    # TODO: Voucher url
 ]
