@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '=g3_op0@r1r^^-!u^xeqdayobgxo6vrcpg5t%v+q2su9lqj*b6'
+SECRET_KEY = 'dev'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 PROJECT_APPS = (
+    'app',
     'orders',
 )
 
@@ -151,4 +152,4 @@ BASE_URL = ''
 try:
     from .local_settings import *
 except Exception as e:
-    pass
+    print('Error at import')
