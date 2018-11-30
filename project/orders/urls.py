@@ -22,6 +22,4 @@ urlpatterns = [
         CustomLoginView.as_view(),
         name='login',
     ),
-
-    # TODO: Voucher url
 ]

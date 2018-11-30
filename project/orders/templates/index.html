@@ -15,58 +15,41 @@
 		<noscript><link rel="stylesheet" href="{% static 'css/noscript.css' %}" /></noscript>
 	</head>
 	<body class="is-preload">
-
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Header -->
-					<header id="header" class="alt">
-						<span class="logo"><img src="{% static 'img/logo.svg' %}" alt="" /></span>
-						<h1>PythonShirts</h1>
-					</header>
-
-				<!-- Main -->
-					<div id="main">
-
-						<!-- Introduction -->
-							<section id="intro" class="main">
-
-								<div class="">
-
-									<div class="content">
-
-										<span class="image left"><img src="{{ product.image.url }}" alt="" /></span>
-
-										<header class="major">
-											<h1><strong>{{ product.name }}</strong></h1>
-											<h3><strong>$ {{ product.price|intcomma }}</strong></h3>
-										</header>
-										<p>{{ product.description }}</p>
-										<form class="" action="" method="POST">{% csrf_token %}
-											<ul class="actions">
-												<li><input required type="number" name="quantity"  min="1" max="100" placeholder="000.000"/></li>
-												<li> <input type="submit" class="button primary" value="Comprar"> </li>
-											</ul>
-										</form>
-									</div>
-								</div>
-							</section>
-
+		<div id="wrapper">
+			<header id="header" class="alt">
+				<span class="logo"><img src="{% static 'img/logo.svg' %}" alt="" /></span>
+				<h1>PythonShirts</h1>
+			</header>
+			<div id="main">
+				<section id="intro" class="main">
+					<div class="">
+						<div class="content">
+							<span class="image left"><img src="{{ product.image.url }}" alt="" /></span>
+							<header class="major">
+								<h1><strong>{{ product.name }}</strong></h1>
+								<h3><strong>$ {{ product.price|intcomma }}</strong></h3>
+							</header>
+							<p>{{ product.description }}</p>
+							<form class="" action="" method="POST">{% csrf_token %}
+								<label>Cantidad: </label>
+								<ul class="actions">
+									<li><input required type="number" name="quantity"  min="1" max="100" placeholder="100"/></li>
+									<li> <input type="submit" class="button primary" value="Comprar"> </li>
+								</ul>
+							</form>
+						</div>
 					</div>
-
-				<!-- Footer -->
-					{% include '_footer.html' %}
-
+				</section>
 			</div>
+			{% include '_footer.html' %}
 
-		<!-- Scripts -->
-			<script src="{% static 'js/jquery.min.js' %}"></script>
-			<script src="{% static 'js/jquery.scrollex.min.js' %}"></script>
-			<script src="{% static 'js/jquery.scrolly.min.js' %}"></script>
-			<script src="{% static 'js/browser.min.js' %}"></script>
-			<script src="{% static 'js/breakpoints.min.js' %}"></script>
-			<script src="{% static 'js/util.js' %}"></script>
-			<script src="{% static 'js/main.js' %}"></script>
-
+		</div>
+		<script src="{% static 'js/jquery.min.js' %}"></script>
+		<script src="{% static 'js/jquery.scrollex.min.js' %}"></script>
+		<script src="{% static 'js/jquery.scrolly.min.js' %}"></script>
+		<script src="{% static 'js/browser.min.js' %}"></script>
+		<script src="{% static 'js/breakpoints.min.js' %}"></script>
+		<script src="{% static 'js/util.js' %}"></script>
+		<script src="{% static 'js/main.js' %}"></script>
 	</body>
 </html>

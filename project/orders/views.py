@@ -65,6 +65,7 @@ class NewOrderFormView(LoginRequiredMixin, FormView):
 
         return context
 
+
 class CompleteOrderTemplateView(TemplateView):
     template_name = 'success.html'
 
@@ -92,4 +93,5 @@ class CompleteOrderTemplateView(TemplateView):
         context.update({
             'order': order
         })
+
         return context

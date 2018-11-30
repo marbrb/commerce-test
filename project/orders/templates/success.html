@@ -14,66 +14,50 @@
 		<noscript><link rel="stylesheet" href="{% static 'css/noscript.css' %}" /></noscript>
 	</head>
 	<body class="is-preload">
+		<div id="wrapper">
+			<header id="header">
+			{% if order.payment.is_paid or order.payment.is_delivered %}
+				<h1>¡Éxito!</h1>
+			{% else %}
+				<h1>Lo sentimos</h1>
+			{% endif %}
+			</header>
+			<div id="main">
+				<section id="content" class="main">
 
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Header -->
-					<header id="header">
-					{% if order.payment.is_paid or order.payment.is_delivered %}
-						<h1>¡Exito!</h1>
+				{% if order.payment.is_paid or order.payment.is_delivered %}
+					<p>Muchas gracias por adquirir nuestro producto, esta es el listado de los productos que solicitaste:</p>
+						<ul>
+						{% for product, quantity in order.products.items %}
+							<li>{{ product }} (Cant. {{ quantity }})</li>
+						{% endfor %}
+						</ul>
+						<p>El valor total de tu compra es de $ {{ order.total_value|intcomma }}</p>
 					{% else %}
-						<h1>Lo sentimos</h1>
+						<p>
+							Aún no se ha reporta en nuestro sistema el pago de tu compra, si ya fue realizado por favor
+							ponte en contacto con nosotros.
+						</p>
 					{% endif %}
-					</header>
-
-				<!-- Main -->
-					<div id="main">
-
-						<!-- Content -->
-							<section id="content" class="main">
-
-								<!-- Text -->		{% if order.payment.is_paid or order.payment.is_delivered %}
-																	<p>Muchas gracias por adquirir nuestro producto, esta es el listado de los productos que solicitaste:</p>
-																	<ul>
-																		{% for product, quantity in order.products.items %}
-																			<li>{{ product }} (Cant. {{ quantity }})</li>
-																		{% endfor %}
-																	</ul>
-																	<p>El valor total de tu compra es de $ {{ order.total_value|intcomma }}</p>
-																{% else %}
-																	<p>
-																		Aún no se ha reporta en nuestro sistema el pago de tu compra, si ya fue realizado por favor
-																		ponte en contacto con nosotros.
-																	</p>
-																{% endif %}
-
-                                <ul class="actions special">
-																	{% if order.payment.is_paid or order.payment.is_delivered %}
-																		<li><a href="{% url 'orders:new_order' %}" class="button primary">Seguir comprando</a></li>
-																	{% else %}
-																		<li><a href="{% url 'orders:new_order' %}" class="button primary">Regresar</a></li>
-																	{% endif %}
-                                </ul>
-
-							</section>
-
-					</div>
-
-				<!-- Footer -->
-				{% include '_footer.html' %}
-
-
+          <ul class="actions special">
+						{% if order.payment.is_paid or order.payment.is_delivered %}
+							<li><a href="{% url 'orders:new_order' %}" class="button primary">Seguir comprando</a></li>
+						{% else %}
+							<li><a href="{% url 'orders:new_order' %}" class="button primary">Regresar</a></li>
+						{% endif %}
+          </ul>
+					</section>
 			</div>
-
+			<!-- Footer -->
+			{% include '_footer.html' %}
+		</div>
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
 	</body>
 </html>

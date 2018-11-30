@@ -1,11 +1,15 @@
 import json
 
 from django.contrib import admin
+from django.contrib import messages
+from django.urls import path
+from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect
 
 from .models import Order
 from .models import Payment
 from .models import Product
-
+from .utils import reverse_payment
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
@@ -38,6 +42,7 @@ class OrderAdmin(admin.ModelAdmin):
     )
 
     readonly_fields = fields
+
 
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
@@ -72,6 +77,51 @@ class PaymentAdmin(admin.ModelAdmin):
     )
 
     readonly_fields = fields
+
+    def _reverse_payment(self, request, object_id):
+
+        payment = get_object_or_404(
+            Payment,
+            pk=object_id,
+        )
+
+        reverse_payment(payment=payment)
+
+        if payment.is_reversed:
+            messages.success(request, 'El pago fue reversado.')
+
+        else:
+            messages.error(request, 'No se puede reversar el pago.')
+
+        return redirect(
+            'admin:orders_payment_change', object_id
+        )
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        extra_context = extra_context or {}
+        extra_context['buttons'] = [{
+            'url': 'reembolso',
+            'textname': 'Revertir pago',
+            'confirm': '¿Confirma que desea revertir el pago?',
+        }]
+
+        return super().change_view(
+            request,
+            object_id,
+            form_url,
+            extra_context=extra_context
+        )
+
+    def get_urls(self):
+        urls = super().get_urls()
+        my_urls = [
+            path(
+                '<path:object_id>/change/reembolso/',
+                self.admin_site.admin_view(self._reverse_payment),
+                name='revert_payment'
+            )
+        ]
+        return my_urls + urls
 
 
 @admin.register(Product)

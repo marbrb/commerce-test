@@ -21,8 +21,8 @@ def headers():
 
     return headers
 
+
 def create_payment_at_tpaga(order, request_ip):
-    tpaga_payment_url = ''
     purchase_details_url = settings.BASE_URL + reverse(
         'orders:complete_order', args=[order.id]
     )
@@ -55,7 +55,7 @@ def create_payment_at_tpaga(order, request_ip):
             headers=headers(),
             timeout=20,
         )
-        
+
         if response.status_code == 201:
             response_data = response.json()
             order.payment.status = data.CREATED_CHOICE
@@ -68,10 +68,11 @@ def create_payment_at_tpaga(order, request_ip):
 
     except requests.exceptions.Timeout:
         order.payment.create_response = {
-            'error': 'timeout',
+            'error': 'timeout at create',
         }
 
     return False, '/'
+
 
 def update_payment_status(payment):
     status_url = settings.TPAGA_PAYMENT_STATUS_URL.format(
@@ -124,7 +125,10 @@ def confirm_delivery(payment):
 
         response_data = response.json()
 
-        if response.status_code == 200 and response_data.get('status') == 'delivered':
+        if (
+            response.status_code == 200 and
+            response_data.get('status') == 'delivered'
+        ):
             payment.status = data.DELIVERED_CHOICE
             payment.status_updated_at = timezone.now()
             payment.save()
@@ -140,6 +144,7 @@ def confirm_delivery(payment):
     payment.save()
 
     return False
+
 
 def reverse_payment(payment):
         request_data = {
@@ -163,7 +168,6 @@ def reverse_payment(payment):
                 payment.status = data.REVERSED_CHOICE
                 payment.status_updated_at = timezone.now()
                 payment.save()
-                return True
 
             else:
                 payment.status = data.FAILED_REVERSED_CHOICE
@@ -174,7 +178,6 @@ def reverse_payment(payment):
         payment.status_updated_at = timezone.now()
         payment.save()
 
-        return False
 
 def get_client_ip(request):
     ip_header = request.META.get('HTTP_X_FORWARDED_FOR')

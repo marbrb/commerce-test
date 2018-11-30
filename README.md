@@ -1,4 +1,4 @@
-# commerce-test
+# E-commerce
 A simple commerce to buy products using the Tpaga wallet.
 
 ### Project time estimation
@@ -7,3 +7,20 @@ A simple commerce to buy products using the Tpaga wallet.
 * Tpaga integration - 8 hours
 * Deployment - 2 hours
 * Total - **16 hours**
+
+### run locally
+Using virtualenwrapper:
+
+    $ mkvirtualenv -p python3 env
+
+Install dependences:
+
+    $ pip install -r requirements.txt
+
+Run migrations:
+
+    $ ./manage.py migrate
+
+Run local server:
+
+    $ ./manage.py runserver
